@@ -1,0 +1,100 @@
+# PBS cluster configuration for Snakemake
+
+__default__:
+  - "-l select=1:ncpus={threads}:mem={resources.mem_gb}gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}_{wildcards}.log"
+  - "-N {rule}_{wildcards}"
+
+# Rule-specific configurations
+fastqc_pretrim:
+  - "-l select=1:ncpus={threads}:mem={resources.mem_gb}gb:scratch_local=50gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}_{wildcards}.log"
+  - "-N fastqc_pretrim_{wildcards.sample}"
+
+fastqc_posttrim:
+  - "-l select=1:ncpus={threads}:mem={resources.mem_gb}gb:scratch_local=50gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}_{wildcards}.log"
+  - "-N fastqc_posttrim_{wildcards.sample}"
+
+fastp_trimming:
+  - "-l select=1:ncpus={threads}:mem={resources.mem_gb}gb:scratch_local=100gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}_{wildcards}.log"
+  - "-N fastp_{wildcards.sample}"
+
+trimmomatic_trimming:
+  - "-l select=1:ncpus={threads}:mem={resources.mem_gb}gb:scratch_local=100gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}_{wildcards}.log"
+  - "-N trimmomatic_{wildcards.sample}"
+
+spades_assembly:
+  - "-l select=1:ncpus={threads}:mem={resources.mem_gb}gb:scratch_local=500gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}.log"
+  - "-N spades_assembly"
+
+busco_analysis:
+  - "-l select=1:ncpus={threads}:mem={resources.mem_gb}gb:scratch_local=200gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}.log"
+  - "-N busco_analysis"
+
+bwa_mapping:
+  - "-l select=1:ncpus={threads}:mem={resources.mem_gb}gb:scratch_local=200gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}_{wildcards}.log"
+  - "-N bwa_mapping_{wildcards.sample}"
+
+freebayes_variants:
+  - "-l select=1:ncpus=8:mem={resources.mem_gb}gb:scratch_local=100gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}_{wildcards}.log"
+  - "-N freebayes_{wildcards.sample}"
+
+bcftools_variants:
+  - "-l select=1:ncpus=8:mem={resources.mem_gb}gb:scratch_local=100gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}_{wildcards}.log"
+  - "-N bcftools_{wildcards.sample}"
+
+repeat_modeler:
+  - "-l select=1:ncpus={threads}:mem={resources.mem_gb}gb:scratch_local=500gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}.log"
+  - "-N repeat_modeler"
+
+repeat_masker:
+  - "-l select=1:ncpus={threads}:mem={resources.mem_gb}gb:scratch_local=200gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}.log"
+  - "-N repeat_masker"
+
+augustus_prediction:
+  - "-l select=1:ncpus=4:mem={resources.mem_gb}gb:scratch_local=100gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}.log"
+  - "-N augustus_prediction"
+
+diamond_blastx:
+  - "-l select=1:ncpus={threads}:mem={resources.mem_gb}gb:scratch_local=200gb"
+  - "-l walltime={resources.time_min}:00"
+  - "-j oe"
+  - "-o logs/{rule}.log"
+  - "-N diamond_blastx"

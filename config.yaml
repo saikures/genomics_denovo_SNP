@@ -1,0 +1,46 @@
+# Configuration file for genomics pipeline
+
+# Sample information
+samples:
+  - "EN00006609_2_Vp3"
+  - "AVMp6"
+  - "Avp101"
+  - "AVp79"
+  - "AVSp7"
+
+# Reference genome (will be generated from assembly)
+reference: "results/assembly/filtered_scaffolds.fasta"
+
+# Trimming parameters
+trimmomatic:
+  adapters: "TruSeq3-PE.fa"  # Path to adapter file
+
+# Filtering parameters
+filtering:
+  min_coverage: 100
+
+# BUSCO parameters
+busco:
+  lineage: "euglenozoa_odb10"
+
+# AUGUSTUS parameters
+augustus:
+  species: "leishmania_tarentolae"
+
+# DIAMOND parameters
+diamond:
+  database: "UnirefDMND/uniref50DMND.dmnd"  # Path to DIAMOND database
+
+# PBS cluster configuration
+cluster:
+  account: "your_account"
+  partition: "compute"
+  default_resources:
+    mem_gb: 16
+    time_min: 120
+    cpus: 4
+
+# Software paths (modify as needed for your HPC environment)
+software:
+  conda_env_variant: "/storage/brno12-cerit/home/saikures/miniconda3/bin/activate variant_calling_snp_env"
+  conda_env_samtools: "/storage/brno12-cerit/home/saikures/miniconda3/bin/activate samtools_env"
