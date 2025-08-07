@@ -1,5 +1,5 @@
 # Genomics Pipeline Snakemake Workflow
-# Author: Generated from pipeline documentation
+# Author: saikures
 # Description: Complete genomics workflow from raw reads to gene prediction
 
 import os
